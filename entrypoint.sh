@@ -21,6 +21,8 @@ DESTINATION_BRANCH="${INPUT_DESTINATION_BRANCH:-"master"}"
 # Github actions no longer auto set the username and GITHUB_TOKEN
 git remote set-url origin "https://iiglesiasg:$ABP_PERSONAL_TOKEN@github.com/iiglesiasg/basetfdeploy"
 
+git config --global --add "https://iiglesiasg:$ABP_PERSONAL_TOKEN@github.com/iiglesiasg/basetfdeploy"
+
 # Pull all branches references down locally so subsequent commands can see them
 git fetch origin '+refs/heads/*:refs/heads/*' --update-head-ok
 
@@ -75,7 +77,7 @@ if [[ "$INPUT_PR_DRAFT" ==  "true" ]]; then
   PR_ARG="$PR_ARG -d"
 fi
 
-COMMAND="git pull-request \
+COMMAND="hub pull-request \
   -b $DESTINATION_BRANCH \
   -h $SOURCE_BRANCH \
   --no-edit \
